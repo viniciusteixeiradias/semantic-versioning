@@ -1,20 +1,24 @@
 {
   "name": "semantic-versioning",
   "private": true,
-  "version": "0.0.0",
+  "version": "1.0.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "commit": "cz"
+    "commit": "cz",
+    "release": "semantic-release --no-ci"
   },
   "dependencies": {
     "vue": "^3.2.37"
   },
   "devDependencies": {
+    "@semantic-release/changelog": "^6.0.1",
+    "@semantic-release/git": "^10.0.1",
     "@vitejs/plugin-vue": "^3.1.0",
     "cz-conventional-changelog": "^3.3.0",
+    "semantic-release": "^19.0.5",
     "typescript": "^4.6.4",
     "vite": "^3.1.0",
     "vue-tsc": "^0.40.4"
