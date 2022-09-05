@@ -1,0 +1,31 @@
+name: Release old
+
+on:
+  push:
+    branches:
+      - master
+      - dev/*
+      - feature/*
+      - hotfix/*
+      - release/*
+
+# env:
+  # GITHUB_TOKEN: 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
+
+jobs:
+  release:
+    name: Release old
+    runs-on: ubuntu-latest
+    steps:
+      - name: Semantic Release
+        uses: cycjimmy/semantic-release-action@v2
+        id: semantic
+        with:
+          semantic_version: 17
+          extra_plugins: |
+            @semantic-release/changelog@5
+            @semantic-release/exec@5
+            @semantic-release/git@9
+        env:
+          GITHUB_TOKEN: ${{ secrets.ELEVATED_GITHUB_TOKEN }}
+          S3_BUCKET: ${{ secrets.S3_BUCKET }}
