@@ -1,4 +1,4 @@
-name: Release old
+name: CI
 
 on:
   push:
@@ -9,14 +9,25 @@ on:
       - hotfix/*
       - release/*
 
-# env:
-  # GITHUB_TOKEN: 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
-
 jobs:
-  release:
-    name: Release old
+  build-api:
+    name: Building Docker Images
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
+      - name: Prepare prerelease semantic
+        if: github.ref != 'refs/heads/master'
+        run: |
+          mv .releaserc.prerelease.yaml .releaserc.yaml
+
+      - name: Using .releaserc.yaml
+        run: |
+          cat .releaserc.yaml
+
       - name: Semantic Release
         uses: cycjimmy/semantic-release-action@v2
         id: semantic
@@ -28,4 +39,4 @@ jobs:
             @semantic-release/git@9
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
+         # S3_BUCKET: ${{ secrets.S3_BUCKET }}
